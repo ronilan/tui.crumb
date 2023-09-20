@@ -1,0 +1,92 @@
+(use "./usables/colors.crumb" {
+  element_instructions = (list (list 0 0 (color 134 "Type, Move, Click...")) void)
+
+  element_loop = ({
+    props = (list 2 2 "")
+
+    on_state = {
+      props = (get element_loop 0)
+      props = (set props (list (color 1 (join "Loops: " (string (get state 0))))) 2)
+
+      (draw props)
+      <- state
+    }
+
+    on_loop = {
+      <- (set state (add (get state 0) 1) 0)
+    }
+
+    <- (list props (list on_state on_loop void void void))
+  })
+
+  element_keypress = ({
+    props = (list 2 3 "")
+
+    on_state = {
+      props = (get element_keypress 0)
+      props = (set props (list (color 2 (join "Keypressed: " (string (get state 1))))) 2)
+
+      
+      (draw props)
+      <- state
+    }
+
+    on_loop = {
+      <- (set state "          " 1)
+    }
+
+    on_keypress = {
+      <- (set state keypress_name 1)
+    }
+
+    <- (list props (list on_state on_loop on_keypress void void))
+  })
+
+  element_move = ({
+    props = (list 2 4 "")
+
+    on_state = {
+      props = (get element_move  0)
+      props = (set props (list (color 3 (join "Mouse: " (string (get (get state 2) 0) ) ":" (string (get (get state 2) 1) ) "   " ))) 2)
+
+      (draw props)
+      <- state
+    }
+
+    on_move = {
+      <- (set state mouse_xy 2)
+    }
+
+    <- (list props (list on_state void void on_move void))
+  })
+
+  element_click = ({
+    props =  (list 2 5 "")
+
+    on_state = {
+      props = (get element_click  0)
+      props = (set props (list (color 4 (join "Click: " (string (get state 3))))) 2)
+
+      (draw props)
+      <- state
+    }
+
+    on_loop = {
+      <- (set state " " 3)
+    }
+
+    on_click = {
+      <- (set state "👍" 3)
+    }
+
+    <- (list props (list on_state on_loop void void on_click ))
+  })
+
+  elements = (list element_loop element_keypress element_move element_click element_instructions)
+
+  state = (list 0 "" (list 0 0) "")
+
+  (use "./tui.crumb" {
+    <- (start state elements)
+  })
+})

@@ -1,0 +1,138 @@
+(use "./usables/colors.crumb" {
+  clicked_look = { hex ->
+    <-(color hex (list
+      "-     -"
+      "Pressed"
+      "-     -"
+    ))
+  }
+
+  element_center = (list (list 
+      (subtract (integer (divide (columns) 2)) 10) 
+      (subtract (integer (divide (rows) 2)) 1) 
+      (faint "Click Wind Directions")
+    ) void)
+
+  element_west = ({
+    props = (list 0 (subtract (integer (divide (rows) 2)) 2) (color "fda033" (list
+        (list "╔" "═" "═" "═" "═" "═" "╗")
+        (list "║" "W" "e" "s" "t" " " "║")
+        (list "╚" "═" "═" "═" "═" "═" "╝")
+      )))
+
+      on_state = {
+        (if (get state 0) {
+          clicked = (list 0 (subtract (integer (divide (rows) 2)) 2) (clicked_look "fda033"))
+          (draw clicked)
+        } {
+          (draw (get element_west 0))
+        })
+
+        <- state
+      }
+
+      on_click = {
+        <- (if (mouse_over (get element_west 0) mouse_xy) {
+          <- (set state 1 0)
+        } {
+          <- (set state 0 0)
+        })
+      }
+
+    <- (list props (list on_state void void void on_click ))
+  })
+
+  element_north = ({
+    props = (list (subtract (integer (divide (columns) 2)) 3) 0 (color "a0fd33" (list
+        (list "╔" "═" "═" "═" "═" "═" "╗")
+        (list "║" "N" "o" "r" "t" "h" "║")
+        (list "╚" "═" "═" "═" "═" "═" "╝")
+      )))
+
+      on_state = {
+        (if (get state 1) {
+          clicked = (list (subtract (integer (divide (columns) 2)) 3) 0  (clicked_look "a0fd33"))
+          (draw clicked)
+        } {
+          (draw (get element_north 0))
+        })
+
+        <- state
+      }
+
+      on_click = {
+        <- (if (mouse_over (get element_north 0) mouse_xy) {
+          <- (set state 1 1)
+        } {
+          <- (set state 0 1)
+        })
+      }
+
+    <- (list props (list on_state void void void on_click ))
+  })
+
+  element_east = ({
+    props = (list (subtract (columns) 7) (subtract (integer (divide (rows) 2)) 2) (color "a033fd" (list
+        (list "╔" "═" "═" "═" "═" "=" "╗")
+        (list "║" "E" "e" "s" "t" " " "║")
+        (list "╚" "═" "═" "═" "═" "=" "╝")
+      )))
+
+      on_state = {
+        (if (get state 2) {
+          clicked = (list (subtract (columns) 7) (subtract (integer (divide (rows) 2)) 2) (clicked_look "a033fd"))
+          (draw clicked)
+        } {
+          (draw (get element_east 0))
+        })
+
+        <- state
+      }
+
+      on_click = {
+        <- (if (mouse_over (get element_east 0) mouse_xy) {
+          <- (set state 1 2)
+        } {
+          <- (set state 0 2)
+        })
+      }
+
+    <- (list props (list on_state void void void on_click ))
+  })
+
+  element_south = ({
+    props = (list (subtract (integer (divide (columns) 2)) 3) (subtract (rows) 3) (color "33a0fd" (list
+        (list "╔" "═" "═" "═" "═" "═" "╗")
+        (list "║" "S" "o" "u" "t" "h" "║")
+        (list "╚" "═" "═" "═" "═" "═" "╝")
+      )))
+
+      on_state = {
+        (if (get state 3) {
+          clicked = (list (subtract (integer (divide (columns) 2)) 3) (subtract (rows) 3)  (clicked_look "33a0fd"))
+          (draw clicked)
+        } {
+          (draw (get element_south 0))
+        })
+
+        <- state
+      }
+
+      on_click = {
+        <- (if (mouse_over (get element_south 0) mouse_xy) {
+          <- (set state 1 3)
+        } {
+          <- (set state 0 3)
+        })
+      }
+
+    <- (list props (list on_state void void void on_click ))
+  })
+
+  elements = (list element_center element_west element_north element_east element_south)
+  state = (list 0 0 0 0 "")
+
+  (use "./tui.crumb" "./usables/colors.crumb" {
+    <- (start state elements)
+  })
+})

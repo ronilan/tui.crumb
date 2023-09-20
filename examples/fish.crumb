@@ -1,0 +1,84 @@
+(use "./usables/colors.crumb" {
+  instructions = ({
+    props = (list 0 0 "The Fish will follow the mouse, click to change the fish, type to say things, escape to exit.")
+    
+    <- (list props void)
+  })
+
+  // self clearing element
+  canvas = (list void (list {
+    (print "\e[2;0H\e[0J")
+    <-state
+  } void void void void))
+
+  fish = ({
+    props = (list 10 10 "🐠")
+
+    on_state = {
+      // verbose
+      fish_list = (list "🐠" "🐟" "🐡" "🐕")
+      color_ansi = (add (remainder (get state 1) 7) 9)
+      
+      fish = (get fish_list (remainder (get state 1) (length fish_list)))
+      text = (get state 2)
+      element_look = (color color_ansi (join fish " " text))
+
+      props = (insert (get state 0) element_look 2)
+
+      (draw props)
+      <- state
+    }
+
+    on_keypress = {
+      <- (if (is keypress_name "escape") {
+        <- "break"
+      } {
+        // ignore enter to keep type test on one line
+        <- (if (is keypress_name "\n") {
+          <- state
+        } {
+          <- (if (is keypress_name "delete") {
+            text = (get state 2)
+            <- (if (greater_than (length text) 0){
+              text = (get state 2)
+              <- (set state (delete text (subtract (length text) 1)) 2)
+            }{
+              <- state
+            })
+          } {
+            text = (get state 2)
+            <- (set state (insert text keypress_name ) 2)
+          })
+        })
+      })
+    }
+
+    on_move = {
+      // fix mac os terminal issue
+      <- (if (is (multiply (get mouse_xy 0) (get mouse_xy 1)) 0) {
+        <- state
+      } {
+        <- (set state mouse_xy 0)
+      })
+    }
+
+    on_click = {
+      <- (set state (add 1 (get state 1)) 1)
+    }
+
+    <- (list props (list on_state void on_keypress on_move on_click))
+  })
+
+  elements = (list instructions canvas fish)
+
+  // define initial state
+  mouse_xy = (list (integer (divide (columns) 2)) (integer (divide (rows) 2))) // center the fish
+  thing = 0
+  text = "I say: "
+
+  state = (list mouse_xy thing text)
+
+  (use "./tui.crumb" {
+    <- (start state elements)
+  })
+})

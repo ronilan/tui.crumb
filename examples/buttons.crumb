@@ -1,0 +1,108 @@
+(use "./usables/colors.crumb" {
+  instructions = (list (list 0 0 "Move mouse. Click buttons.") void)
+
+
+
+  // iife
+  lower = ({
+    props = (list 1 10 (color 137 (list
+        (list "╔" "═" "═" "═" "═" "═" "╗")
+        (list "║" "L" "o" "w" "e" "r" "║")
+        (list "╚" "═" "═" "═" "═" "═" "╝")
+      )))
+
+    on_state = {
+      (draw (get lower 0))
+      <- state
+    }
+
+    on_click = {
+      <- (if (mouse_over (get lower 0) mouse_xy) {
+        <- "Clicked Lower"
+      } {
+        <- state
+      })
+    }
+
+    listeners = (list on_state void void void on_click)
+    <- (list props listeners)
+  })
+
+  // iife
+  upper = ({
+    props = (list 1 2 (color 134 (list
+        (list "╔" "═" "═" "═" "═" "═" "╗")
+        (list "║" "U" "p" "p" "e" "r" "║")
+        (list "╚" "═" "═" "═" "═" "═" "╝")
+      )))
+
+    on_state = {
+      (draw (get upper 0))
+      <- state
+    }
+
+    on_click = {
+      <- (if (mouse_over (get upper 0) mouse_xy) {
+        <- "Clicked Upper"
+      } {
+        <- state
+      })
+    }
+
+    listeners = (list on_state void void void on_click)
+    <- (list props listeners)
+  })
+
+  // verbose iife
+  notice = ({
+    // iife
+    props = ({
+      x = 2
+      y = 7
+      data = "                              " 
+
+      <- (list x y data)
+    })
+
+    on_state = {
+      props = (get notice 0)
+      data = (get props 2)
+      text = (color 37 (set (get data 0) state 0))
+      data = (set data text 0)
+      props = (set props data 2)
+
+      (draw props)
+      <- state
+    }
+
+    on_move = {
+      <- (if (mouse_over (get lower 0) mouse_xy) {
+        <- "Over Lower"
+      } {
+        <- (if (mouse_over (get upper 0) mouse_xy) {
+          <- "Over Upper"
+        } {
+          <- ""
+        })
+      })
+    }
+
+    listeners = (list on_state void void on_move void)
+
+    <- (list props listeners)
+  })
+
+  empty = ({
+    <- (list void (list void void void void void))
+  })
+
+  voider = (list void void)
+
+
+  elements = (list instructions upper  lower notice empty void)
+  state = ""
+
+  (use "./tui.crumb" "./usables/colors.crumb" {
+    <- (start state elements)
+  })
+})

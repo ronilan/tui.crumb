@@ -1,0 +1,71 @@
+// element can be:
+// a void
+voider = void
+
+// or a list of void props and void listeners
+// defined as list
+voids = (list void void)
+
+// or a list of void props and a list of void event functions
+// defined as list
+empty = ({
+  <- (list 
+    void 
+    (list void void void void void)
+  )
+})
+
+// or a valid props where data is string with void listener
+// defined as list
+text = (list (list 1 0 "Just Text") void)
+
+// or a valid props where data is list of strings with void listener
+// defined as iife
+multi_line = ({
+  props = (list 1 2 (list
+      "More than"
+      "a single "
+      "line     "
+    ))
+
+  listeners = (list void void void void void)
+  <- (list props void)
+})
+
+// or a valid props where data is list of lists of strings with void listener
+// defined as iife
+array = ({
+  props = (list 1 7 (list
+      (list "╔" "═" "═" "═" "═" "═" "═" "╗")
+      (list "║" "B" "u" "t" "t" "o" "n" "║")
+      (list "╚" "═" "═" "═" "═" "═" "═" "╝")
+    ))
+
+  listeners = (list void void void void void)
+  <- (list props void)
+})
+
+// or a valid props where data is list of lists of strings with void listener
+// defined as iife with props as an iife
+verbose = ({
+  props = ({
+    x = 1
+    y = 12
+    // each emoji takes two spaces in terminal grid
+    data = (list
+      (list "❤️" " " "❤️" " " "❤️" " " "❤️")
+    )
+
+    <- (list x y data)
+  })
+
+  listeners = (list void void void void void)
+  <- (list props void)
+})
+
+elements = (list voider voids empty text multi_line array verbose )
+state = ""
+
+(use "./tui.crumb" "./usables/colors.crumb" {
+  <- (start state elements)
+})
