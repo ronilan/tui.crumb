@@ -1,16 +1,16 @@
 (use "./usables/colors.crumb" {
-  clicked_look = { hex ->
-    <-(color hex (list
-      "-     -"
-      "Pressed"
-      "-     -"
+  clicked_look = { text hex ->
+    <- (color hex (list
+      "+     +"
+      (set "       " text 1)
+      "+     +"
     ))
   }
 
   element_center = (list (list 
-      (subtract (integer (divide (columns) 2)) 10) 
+      (subtract (integer (divide (columns) 2)) 17) 
       (subtract (integer (divide (rows) 2)) 1) 
-      (faint "Click Wind Directions")
+      (faint "Wind Directions are Radio Buttons")
     ) void)
 
   element_west = ({
@@ -22,7 +22,7 @@
 
       on_state = {
         (if (get state 0) {
-          clicked = (list 0 (subtract (integer (divide (rows) 2)) 2) (clicked_look "fda033"))
+          clicked = (list 0 (subtract (integer (divide (rows) 2)) 2) (clicked_look "West" "fda033"))
           (draw clicked)
         } {
           (draw (get element_west 0))
@@ -51,7 +51,7 @@
 
       on_state = {
         (if (get state 1) {
-          clicked = (list (subtract (integer (divide (columns) 2)) 3) 0  (clicked_look "a0fd33"))
+          clicked = (list (subtract (integer (divide (columns) 2)) 3) 0  (clicked_look "North" "a0fd33"))
           (draw clicked)
         } {
           (draw (get element_north 0))
@@ -80,7 +80,7 @@
 
       on_state = {
         (if (get state 2) {
-          clicked = (list (subtract (columns) 7) (subtract (integer (divide (rows) 2)) 2) (clicked_look "a033fd"))
+          clicked = (list (subtract (columns) 7) (subtract (integer (divide (rows) 2)) 2) (clicked_look "East" "a033fd"))
           (draw clicked)
         } {
           (draw (get element_east 0))
@@ -109,7 +109,7 @@
 
       on_state = {
         (if (get state 3) {
-          clicked = (list (subtract (integer (divide (columns) 2)) 3) (subtract (rows) 3)  (clicked_look "33a0fd"))
+          clicked = (list (subtract (integer (divide (columns) 2)) 3) (subtract (rows) 3)  (clicked_look "South" "33a0fd"))
           (draw clicked)
         } {
           (draw (get element_south 0))
