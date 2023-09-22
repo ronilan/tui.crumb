@@ -1,5 +1,5 @@
 (use "./usables/colors.crumb" {
-  element_instructions = (list (list 0 0 (color 134 "Type, Move, Click...")) void)
+  element_instructions = (list (list 0 0 (color 6 "Type, Move, Click...")) void)
 
   element_loop = ({
     props = (list 2 2 "")
@@ -82,9 +82,37 @@
     <- (list props (list on_state on_loop void void on_click ))
   })
 
-  elements = (list element_loop element_keypress element_move element_click element_instructions)
+  element_double_click = ({
+    props =  (list 2 6 "")
 
-  state = (list 0 "" (list 0 0) "")
+    on_state = {
+      props = (get element_double_click  0)
+      props = (set props (list (color 5 (join "Double Click: " (string (get (get state 4) 1))))) 2)
+
+      (draw props)
+      <- state
+    }
+
+    on_loop = {
+      <- (set state (list (get (get state 4) 0) " ") 4)
+    }
+
+    on_click = {
+      is_double_click = (if (is (add (get (get state 4) 0) 2) loop_count) {
+        <- "👍"
+      } {
+        <- ""
+      }) 
+
+      <- (set state (list loop_count is_double_click) 4)
+    }
+
+    <- (list props (list on_state on_loop void void on_click ))
+  })
+
+  elements = (list element_loop element_keypress element_move element_click element_double_click element_instructions)
+
+  state = (list 0 "" (list 0 0) "" (list 0 ""))
 
   (use "./tui.crumb" {
     <- (start state elements)

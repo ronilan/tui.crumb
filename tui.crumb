@@ -127,7 +127,8 @@ start = { state elements ->
   (loop (length listeners) { index -> 
     element = (get elements index)
     listener = (get listeners index)
-
+  
+    loop_count = 0 // listeners may use loop_count
     fn = (get (get listeners index) 0) 
     (if (not (is fn void)) {
       (fn)
