@@ -72,11 +72,11 @@
     }
 
     on_loop = {
-      <- (set state " " 3)
+      <- (set state "  " 3)
     }
 
     on_click = {
-      <- (set state "👍" 3)
+      <- (set state (string mouse_code) 3)
     }
 
     <- (list props (list on_state on_loop void void on_click ))
@@ -98,10 +98,10 @@
     }
 
     on_click = {
-      is_double_click = (if (is (add (get (get state 4) 0) 2) loop_count) {
-        <- "👍"
+      is_double_click = (if (is (add (get (get state 4) 0) 1) loop_count) {
+        <- mouse_code
       } {
-        <- ""
+        <- "  "
       }) 
 
       <- (set state (list loop_count is_double_click) 4)
