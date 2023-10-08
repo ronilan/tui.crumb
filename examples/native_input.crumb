@@ -1,0 +1,102 @@
+// Using native input function to get user data
+my_input = { x y label ->
+  (go_to (add x (length label)) y)
+  (show_cursor)
+  // halting
+  from_user = (input)
+  (hide_cursor)
+
+  <- from_user
+}
+
+// element used to manage focus
+form = ({
+  props = (list 0 0 "Enter to move to next field:")
+  
+  on_loop = {
+    <- (if (is (get state FOCUS) void) { // init
+      <- (set state 0 FOCUS)
+    } (is (get state FOCUS) 4) { // break on next loop
+      <- void
+    })
+
+    <- state
+  }
+
+  <- (list props (list void on_loop void void void)) 
+})
+
+name = ({
+  on_state = {
+    str = "Full Name: "
+    (draw (list 1 1 (join str (get (get state DATA) 0 ))))
+
+    <- (if (is (get state FOCUS) 0) {
+      from_user = (my_input 1 1 str)
+
+      state = (set state (add (get state FOCUS) 1) FOCUS)
+      data = (set (get state DATA) from_user 0)
+      <- (set state data DATA)
+    } {
+      <- state
+    })
+  }
+
+  <- (list void (list on_state void void void void))
+})
+
+email = ({
+  on_state = {
+    str = "Email: "
+    (draw (list 1 2 (join str (get (get state DATA) 1 ))))
+
+    <- (if (is (get state FOCUS) 1) {
+      from_user = (my_input 1 2 str)
+
+      state = (set state (add (get state FOCUS) 1) FOCUS)
+      data = (set (get state DATA) from_user 1)
+      <- (set state data DATA)
+    } {
+      <- state
+    })
+  }
+
+  <- (list void (list on_state void void void void))
+})
+
+github = ({
+  on_state = {
+    str = "GitHub User Name: "
+    (draw (list 1 3 (join str (get (get state DATA) 2 ))))
+
+    <- (if (is (get state FOCUS) 2) {
+      from_user = (my_input 1 3 str)
+
+      state = (set state (add (get state FOCUS) 1) FOCUS)
+      data = (set (get state DATA) from_user 2)
+      <- (set state data DATA)
+    } {
+      <- state
+    })
+  }
+
+  <- (list void (list on_state void void void void))
+})
+
+FOCUS = 0
+DATA = 1
+
+state = (list void (list "" "" ""))
+
+elements = (list
+  form
+  name
+  email
+  github
+)
+
+state = (use "tui.crumb" {
+  <- (start state elements)
+})
+
+(print (get state DATA) "\n")

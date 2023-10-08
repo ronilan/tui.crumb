@@ -1,8 +1,6 @@
 (use "./usables/colors.crumb" {
   instructions = (list (list 0 0 "Move mouse. Click buttons.") void)
 
-
-
   // iife
   lower = ({
     props = (list 1 10 (color 137 (list
