@@ -16,11 +16,11 @@ form = ({
   on_loop = {
     <- (if (is (get state FOCUS) void) { // init
       <- (set state 0 FOCUS)
-    } (is (get state FOCUS) 4) { // break on next loop
-      <- void
+    } (is (get state FOCUS) 4) {
+      <- (set state 0 FOCUS)
+    } {
+      <- state
     })
-
-    <- state
   }
 
   <- (list props (list void on_loop void void void)) 
@@ -32,6 +32,7 @@ name = ({
     (draw (list 1 1 (join str (get (get state DATA) 0 ))))
 
     <- (if (is (get state FOCUS) 0) {
+      (draw (list 1 1 (join str "               ")))
       from_user = (my_input 1 1 str)
 
       state = (set state (add (get state FOCUS) 1) FOCUS)
@@ -51,6 +52,7 @@ email = ({
     (draw (list 1 2 (join str (get (get state DATA) 1 ))))
 
     <- (if (is (get state FOCUS) 1) {
+      (draw (list 1 2 (join str "               ")))
       from_user = (my_input 1 2 str)
 
       state = (set state (add (get state FOCUS) 1) FOCUS)
@@ -70,6 +72,7 @@ github = ({
     (draw (list 1 3 (join str (get (get state DATA) 2 ))))
 
     <- (if (is (get state FOCUS) 2) {
+      (draw (list 1 3 (join str "               ")))
       from_user = (my_input 1 3 str)
 
       state = (set state (add (get state FOCUS) 1) FOCUS)
@@ -83,6 +86,34 @@ github = ({
   <- (list void (list on_state void void void void))
 })
 
+submit = ({
+
+  on_state = {
+    str = "Submit"
+    (draw (list 1 5 str))
+
+    <- (if (is (get state FOCUS) 3) {
+      (draw (list 1 5 (join "\e[4m" str "\e[0;0m")))
+      <- state
+    } {
+      (draw (list 1 5 str))
+      <- state
+    })
+  }
+
+  on_keypress = {
+    <- (if (is keypress_name "\n") {
+      <- void
+    } (or (is keypress_name "up") (is keypress_name "down")) {
+      <- (set state (add (get state FOCUS) 1) FOCUS)
+    } {
+      <- state
+    })
+  }
+
+  <- (list void (list on_state void on_keypress void void))
+})
+
 FOCUS = 0
 DATA = 1
 
@@ -93,6 +124,7 @@ elements = (list
   name
   email
   github
+  submit
 )
 
 state = (use "tui.crumb" {
