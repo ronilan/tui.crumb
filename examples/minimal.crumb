@@ -41,7 +41,6 @@ array = ({
       (list "╚" "═" "═" "═" "═" "═" "═" "╝")
     ))
 
-  listeners = (list void void void void void)
   <- (list props void)
 })
 
@@ -59,7 +58,6 @@ verbose = ({
     <- (list x y data)
   })
 
-  listeners = (list void void void void void)
   <- (list props void)
 })
 
