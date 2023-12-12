@@ -23,6 +23,12 @@ WIP
 
 WIP
 
+## Made With
+
+[Crumbicon](https://github.com/ronilan/crumbicon) - a mouse driven icon editor for your terminal. It creates, and then edits svg images that can be used as website favicons (i.e. the little icons that appear at the top tabs etc.). Icons can be 8 pixels by 8 pixels, or 16 pixels by 16 pixels, utilizing 256 colors.
+
+[Rewordle](https://github.com/ronilan/rewordle) - lets you play all the Worlde words from the beginning in the terminal.
+
 ## Running Examples
 
 ### With Docker:
