@@ -79,6 +79,6 @@
   state = (list mouse_xy thing text)
 
   (use "./tui.crumb" {
-    <- (start state elements)
+    <- (start state elements void)
   })
 })

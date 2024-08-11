@@ -115,6 +115,6 @@
   state = (list 0 "" (list 0 0) "" (list 0 ""))
 
   (use "./tui.crumb" {
-    <- (start state elements)
+    <- (start state elements 0.1)
   })
 })
