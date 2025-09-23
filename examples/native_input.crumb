@@ -23,7 +23,7 @@ form = ({
     })
   }
 
-  <- (list props (list void on_loop void void void)) 
+  <- (list props (list void on_loop void void void void void void)) 
 })
 
 name = ({
@@ -43,7 +43,7 @@ name = ({
     })
   }
 
-  <- (list void (list on_state void void void void))
+  <- (list void (list on_state void void void void void void void))
 })
 
 email = ({
@@ -63,7 +63,7 @@ email = ({
     })
   }
 
-  <- (list void (list on_state void void void void))
+  <- (list void (list on_state void void void void void void void))
 })
 
 github = ({
@@ -83,7 +83,7 @@ github = ({
     })
   }
 
-  <- (list void (list on_state void void void void))
+  <- (list void (list on_state void void void void void void void))
 })
 
 submit = ({
@@ -111,7 +111,7 @@ submit = ({
     })
   }
 
-  <- (list void (list on_state void on_keypress void void))
+  <- (list void (list on_state void on_keypress void void void void void))
 })
 
 FOCUS = 0

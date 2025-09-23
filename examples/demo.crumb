@@ -16,7 +16,7 @@
       <- (set state (add (get state 0) 1) 0)
     }
 
-    <- (list props (list on_state on_loop void void void))
+    <- (list props (list on_state on_loop void void void void void void))
   })
 
   element_keypress = ({
@@ -39,7 +39,7 @@
       <- (set state keypress_name 1)
     }
 
-    <- (list props (list on_state on_loop on_keypress void void))
+    <- (list props (list on_state on_loop on_keypress void void void void void))
   })
 
   element_move = ({
@@ -57,7 +57,7 @@
       <- (set state mouse_xy 2)
     }
 
-    <- (list props (list on_state void void on_move void))
+    <- (list props (list on_state void void void void on_move void void))
   })
 
   element_click = ({
@@ -79,7 +79,7 @@
       <- (set state (string mouse_code) 3)
     }
 
-    <- (list props (list on_state on_loop void void on_click ))
+    <- (list props (list on_state on_loop void on_click void void void void ))
   })
 
   element_double_click = ({
@@ -107,7 +107,7 @@
       <- (set state (list loop_count is_double_click) 4)
     }
 
-    <- (list props (list on_state on_loop void void on_click ))
+    <- (list props (list on_state on_loop void on_click void void void void))
   })
 
   elements = (list element_loop element_keypress element_move element_click element_double_click element_instructions)

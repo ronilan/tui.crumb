@@ -9,7 +9,7 @@
   canvas = (list void (list {
     (print "\e[2;0H\e[0J")
     <-state
-  } void void void void))
+  } void void void void void void void))
 
   fish = ({
     props = (list 10 10 "🐠")
@@ -66,7 +66,7 @@
       <- (set state (add 1 (get state 1)) 1)
     }
 
-    <- (list props (list on_state void on_keypress on_move on_click))
+    <- (list props (list on_state void on_keypress on_click void on_move void void))
   })
 
   elements = (list instructions canvas fish)

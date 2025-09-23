@@ -129,11 +129,11 @@ start = { state elements time ->
 
   listeners = (map elements { element index ->
     <- (if (is element void) {
-      <- (list void void void void void)
+      <- (list void void void void void void void void)
       } {
         defined_listeners = (get element 1)
         <- (if (is defined_listeners void) {
-          <- (list void void void void void) 
+          <- (list void void void void void void void void) 
         } {
           <- defined_listeners
         })

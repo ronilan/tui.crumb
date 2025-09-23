@@ -22,7 +22,7 @@
       })
     }
 
-    listeners = (list on_state void void void on_click)
+    listeners = (list on_state void void on_click void void void void)
     <- (list props listeners)
   })
 
@@ -47,7 +47,7 @@
       })
     }
 
-    listeners = (list on_state void void void on_click)
+    listeners = (list on_state void void on_click void void void void)
     <- (list props listeners)
   })
 
@@ -85,19 +85,19 @@
       })
     }
 
-    listeners = (list on_state void void on_move void)
+    listeners = (list on_state void void void void on_move void void)
 
     <- (list props listeners)
   })
 
   empty = ({
-    <- (list void (list void void void void void))
+    <- (list void (list void void void void void void void void))
   })
 
   voider = (list void void)
 
 
-  elements = (list instructions upper  lower notice empty void)
+  elements = (list instructions upper lower notice empty void)
   state = ""
 
   (use "./tui.crumb" "./usables/colors.crumb" {

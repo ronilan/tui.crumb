@@ -39,7 +39,7 @@
         })
       }
 
-    <- (list props (list on_state void void void on_click ))
+    <- (list props (list on_state void void on_click void void void void  ))
   })
 
   element_north = ({
@@ -68,7 +68,7 @@
         })
       }
 
-    <- (list props (list on_state void void void on_click ))
+    <- (list props (list on_state void void on_click void void void void  ))
   })
 
   element_east = ({
@@ -97,7 +97,7 @@
         })
       }
 
-    <- (list props (list on_state void void void on_click ))
+    <- (list props (list on_state void void on_click void void void void  ))
   })
 
   element_south = ({
@@ -126,7 +126,7 @@
         })
       }
 
-    <- (list props (list on_state void void void on_click ))
+    <- (list props (list on_state void void on_click void void void void  ))
   })
 
   elements = (list element_center element_west element_north element_east element_south)
